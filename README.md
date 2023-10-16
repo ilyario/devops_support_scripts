@@ -9,4 +9,9 @@ Adding redirects to all ingresses in namespace
 
 ## list_images_for_namespace.py
 
-Show table with columns - application, image and tag 
+Show table with columns - application, image and tag
+
+## move_secrets_to_vault.py
+
+Copy secrets to vault use API
+
