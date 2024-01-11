@@ -15,3 +15,6 @@ Show table with columns - application, image and tag
 
 Copy secrets to vault use API
 
+## set_topics_to_project_in_group.py
+
+Set topics to project in group

@@ -24,7 +24,7 @@ for secret_name in secret_names:
     secret = v1.read_namespaced_secret(secret_name, namespace)
     vault_secrets = {}
     for key in secret.data:
-        vault_secrets[key] = base64.b64decode(secret.data[key]).decode("utf-8") 
+        vault_secrets[key] = base64.b64decode(secret.data[key]).decode("utf-8")
 
     secret_name_parts = secret_name.split("-")
 
