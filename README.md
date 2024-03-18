@@ -18,3 +18,7 @@ Copy secrets to vault use API
 ## set_topics_to_project_in_group.py
 
 Set topics to project in group
+
+## limits_in_namespace
+
+Calculation limit by namespace in k8s cluster
