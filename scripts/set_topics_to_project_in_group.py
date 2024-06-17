@@ -1,21 +1,34 @@
 import gitlab
-import os
-import sys
+import logging
+from typing import Dict
 
-url = sys.argv[1] 
-group_id = sys.argv[2]
-topic = sys.argv[3]
-private_token = os.environ['GITLAB_TOKEN']
+from pydantic_settings import BaseSettings
+from pydantic import Field
 
-gl = gitlab.Gitlab(url, private_token=private_token)
 
-group = gl.groups.get(group_id)
-projects = group.projects.list(sort='asc', include_subgroups=True, get_all=True)
+class Settings(BaseSettings):
+    gitlab_url: str = Field(env='GITLAB_URL')
+    gitlab_token: str = Field(env='GITLAB_TOKEN')
+    topic_gitlab_group_id_mapping: Dict = Field(env='TOPIC_GITLAB_GROUP_ID_MAPPING')
 
-print(f'gitlab {url} set to group "{group.name}" topics ["{topic}"]')
 
-for project in projects:
-    p = gl.projects.get(project.id)
-    print(project.name)
-    p.topics = [topic]
-    p.save()
+def main():
+  settings = Settings()
+  gl = gitlab.Gitlab(settings.gitlab_url, private_token=settings.gitlab_token)
+  logger = logging.getLogger(__name__)
+
+  for topic, gitlab_group_id in settings.topic_gitlab_group_id_mapping.items():
+      group = gl.groups.get(gitlab_group_id)
+      projects = group.projects.list(sort='asc', include_subgroups=True, get_all=True)
+
+      logger.info(f'gitlab {settings.gitlab_url} set to group "{group.name}" topics ["{topic}"]')
+
+      for project in projects:
+          gl_project = gl.projects.get(project.id)
+          logger.info(project.name)
+          gl_project.topics = [topic]
+          gl_project.save()
+
+
+if __name__ == '__main__':
+    main()
