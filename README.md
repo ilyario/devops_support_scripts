@@ -22,3 +22,7 @@ Set topics to project in group
 ## limits_in_namespace
 
 Calculation limit by namespace in k8s cluster
+
+## nslookup_for_list
+
+Find ip by nslookup for list of domains

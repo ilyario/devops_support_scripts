@@ -9,6 +9,7 @@ pick = "*"
 tabulate = "*"
 hvac = "*"
 python-gitlab = "*"
+nslookup = "*"
 
 [dev-packages]
 
